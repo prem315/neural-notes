@@ -1,0 +1,249 @@
+---
+title: Fine-tuning LLMs
+description: Adapting pretrained models to specific tasks and domains.
+---
+
+Fine-tuning is the **second stage** in building a Large Language Model (LLM), following pre-training. It involves taking an already pre-trained model (the **base model** or **foundational model**) and training it again on a smaller, specialized dataset to make it excel at specific tasks or domains.
+
+Think of it this way: pre-training gives the model a broad education (like going to school and learning general knowledge), while fine-tuning is like specialized training for a specific profession (like medical school or law school).
+
+---
+
+## Why Do We Need Fine-tuning?
+
+### Simple Analogy
+
+Imagine you've learned to drive a car in general. You know the basics: steering, braking, accelerating. But now you want to become a professional race car driver. You need specialized training on race tracks, learning racing techniques, and practicing with race cars. That specialized training is like fine-tuning—you already have the foundation, but now you're becoming an expert in a specific area.
+
+---
+
+## Why Do We Need Fine-tuning?
+
+Fine-tuning serves three critical purposes:
+
+### 1. **Specificity and Domain Adaptation**
+
+Fine-tuning is crucial when your application needs to be specific to a particular task or domain. The foundational model, while powerful, may not have access to:
+
+- Specific industry knowledge
+- Proprietary company data
+- Specialized terminology or jargon
+- Domain-specific best practices
+
+**Example:** A bank like JP Morgan Chase needs to fine-tune an LLM using its own internal data so that the model can provide answers specific to the company's policies, procedures, and financial products. The general pre-trained model wouldn't know about JP Morgan's specific internal systems or proprietary information.
+
+### 2. **Quality Improvement**
+
+Fine-tuning ensures the deployment of **very high-quality outputs** for specific applications. Instead of getting "good enough" answers from a general model, fine-tuning helps you get expert-level responses.
+
+**Example:** If you're building an educational platform that generates practice questions for students, a fine-tuned model can create questions that are:
+
+- Pedagogically sound
+- Appropriate for the specific grade level
+- Aligned with curriculum standards
+- Formatted consistently
+
+A general pre-trained model might generate questions, but they may not meet these specific quality standards.
+
+### 3. **Production Readiness**
+
+When moving to a **production level** or building advanced applications within industries or startups, fine-tuning is necessary. Big companies never rely solely on foundational models—they must go through the next step of fine-tuning to ensure:
+
+- Reliability and consistency
+- Compliance with industry regulations
+- Protection of sensitive data
+- Optimal performance for their specific use case
+
+---
+
+## How is Fine-tuning Different from Pre-training?
+
+The key difference lies in the **type of data** used:
+
+| Aspect            | Pre-training                    | Fine-tuning                                 |
+| ----------------- | ------------------------------- | ------------------------------------------- |
+| **Data Type**     | Raw, unlabeled text             | Labeled, structured data                    |
+| **Data Size**     | Massive (billions of tokens)    | Smaller (thousands to millions of examples) |
+| **Learning Type** | Unsupervised                    | Supervised                                  |
+| **Goal**          | Learn general language patterns | Learn specific tasks or domains             |
+| **Cost**          | Very expensive                  | More affordable                             |
+
+### Understanding Labeled Data
+
+**Labeled data** means that each piece of training data has an associated "answer" or "label" that tells the model what the correct output should be.
+
+**Examples of labeled data:**
+
+1. **For a legal assistant:**
+   - **Input (Question):** "What was the ruling in Brown v. Board of Education?"
+   - **Output (Answer):** "The Supreme Court ruled that racial segregation in public schools was unconstitutional..."
+
+2. **For email classification:**
+   - **Input (Email):** "Congratulations! You've won $1,000,000! Click here to claim..."
+   - **Output (Label):** SPAM
+
+3. **For language translation:**
+   - **Input (English):** "Hello, how are you?"
+   - **Output (French):** "Bonjour, comment allez-vous?"
+
+---
+
+## Categories of Fine-tuning
+
+Within the fine-tuning stage, there are usually **two main categories**:
+
+### 1. **Instruction Fine-tuning**
+
+This involves using **instruction-answer pairs** as the labeled dataset. The model learns to follow specific instructions and provide appropriate responses.
+
+**Use Cases:**
+
+- Text translation (English to French, Spanish to German, etc.)
+- Customer support chatbots
+- Question answering systems
+- Content generation with specific guidelines
+- Code generation from natural language descriptions
+
+**Example Dataset Entry:**
+
+```
+Instruction: "Translate the following English text to French: 'The weather is beautiful today.'"
+Response: "Le temps est magnifique aujourd'hui."
+```
+
+### 2. **Fine-tuning for Classification Tasks**
+
+This type of fine-tuning is used for tasks that require the AI to **categorize or classify** data into predefined groups.
+
+**Use Cases:**
+
+- Spam detection (spam vs. not spam)
+- Sentiment analysis (positive, negative, neutral)
+- Content moderation (appropriate vs. inappropriate)
+- Document categorization (legal, financial, medical, etc.)
+- Intent recognition in chatbots
+
+**Example Dataset Entry:**
+
+```
+Input: "This product is amazing! Best purchase ever!"
+Label: POSITIVE
+```
+
+---
+
+## Real-World Applications
+
+Fine-tuning is essential for deploying LLMs in specialized sectors. Here are some real-world examples:
+
+### **Harvey - Legal AI Assistant**
+
+**The Challenge:** Foundational models lacked extensive knowledge of legal case history, specific legal terminology, and the nuanced reasoning required for legal work.
+
+**The Solution:** Harvey was specifically fine-tuned on datasets including:
+
+- Legal case studies
+- Court rulings and precedents
+- Legal documents and contracts
+- Attorney-client communication patterns
+
+**The Result:** An AI legal tool that attorneys can trust to assist with legal research, document drafting, and case analysis.
+
+---
+
+### **SK Telecom - Customer Service Chatbot**
+
+**The Challenge:** SK Telecom needed a chatbot for improved customer service interactions specific to telecommunications conversations in Korean.
+
+**The Solution:** They fine-tuned GPT-4 with their own specific training data, including:
+
+- Telecom-specific terminology in Korean
+- Common customer queries and appropriate responses
+- Company policies and procedures
+- Technical troubleshooting guides
+
+**The Results:**
+
+- **35% increase** in conversation summarization quality
+- **33% increase** in intent recognition accuracy
+- Better understanding of Korean language nuances
+- More accurate responses to telecom-specific questions
+
+---
+
+### **JP Morgan Chase - Banking AI Suite**
+
+**The Challenge:** The bank needed an LLM that understood their proprietary systems, internal policies, and could handle sensitive financial data securely.
+
+**The Solution:** JP Morgan Chase unveiled its own AI-powered LLM suite, fine-tuned with:
+
+- Internal company data
+- Financial regulations and compliance requirements
+- Banking-specific terminology
+- Historical transaction patterns and fraud indicators
+
+**The Result:** A secure, compliant AI system that employees can use for various banking tasks while maintaining data privacy and regulatory compliance.
+
+---
+
+## What Can You Build with Fine-tuned LLMs?
+
+Fine-tuning results in a specialized LLM capable of highly specific applications:
+
+### **Personal Assistants**
+
+- Schedule management
+- Email drafting and responses
+- Task prioritization
+- Personalized recommendations
+
+### **Language Translation Bots**
+
+- Domain-specific translation (medical, legal, technical)
+- Maintaining consistent terminology
+- Cultural context awareness
+
+### **Summarization Assistants**
+
+- Meeting notes summarization
+- Document summarization
+- News aggregation
+- Research paper abstracts
+
+### **Classification Bots**
+
+- Content moderation
+- Document routing
+- Sentiment analysis
+- Fraud detection
+
+### **Domain Experts**
+
+- Medical diagnosis assistance
+- Legal research tools
+- Financial analysis
+- Educational tutoring
+
+---
+
+## Key Takeaways
+
+1. **Fine-tuning is essential** for moving from a general-purpose model to a specialized, production-ready application.
+
+2. **It requires labeled data**, which is more expensive to create than unlabeled data but is much smaller in volume than pre-training data.
+
+3. **Two main types**: Instruction fine-tuning (for following commands) and classification fine-tuning (for categorizing data).
+
+4. **Real-world success** depends on fine-tuning—major companies like JP Morgan Chase, SK Telecom, and specialized tools like Harvey all rely on fine-tuned models.
+
+5. **Quality matters**: Fine-tuning ensures your LLM provides expert-level, domain-specific responses rather than generic answers.
+
+---
+
+## Next Steps
+
+After fine-tuning, you'll have a powerful, specialized LLM ready for deployment. The next topics to explore include:
+
+- **Reinforcement Learning from Human Feedback (RLHF)** - Further aligning models with human preferences
+- **Model evaluation and testing** - Ensuring your fine-tuned model performs well
+- **Deployment strategies** - Getting your model into production safely and efficiently

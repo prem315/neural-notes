@@ -1,0 +1,230 @@
+---
+title: Machine Learning vs Deep Learning
+description: Understanding the key differences between Machine Learning and Deep Learning with clear examples.
+---
+
+import { Check, X } from "lucide-react";
+
+Machine Learning and Deep Learning are often confused, but there's a clear and simple way to understand the difference between them.
+
+**The key difference:** Deep Learning is a **specific type** of Machine Learning that **only uses neural networks**, while Machine Learning is a **broader field** that includes neural networks **plus many other techniques**.
+
+---
+
+## The Hierarchical Relationship
+
+Think of it this way:
+
+- **Machine Learning** is the bigger umbrella
+- **Deep Learning** is a smaller umbrella that sits inside Machine Learning
+
+```
+Machine Learning (ML)
+├── Deep Learning (neural networks only)
+│   ├── Convolutional Neural Networks (CNNs)
+│   ├── Recurrent Neural Networks (RNNs)
+│   └── Transformers
+│
+└── Other ML Techniques (non-neural network methods)
+    ├── Decision Trees
+    ├── Random Forests
+    ├── Support Vector Machines
+    └── K-Nearest Neighbors
+```
+
+---
+
+## What is Machine Learning?
+
+**Machine Learning** is any system that:
+
+- Learns patterns from data
+- Improves its performance over time
+- Makes predictions or decisions based on what it learned
+
+Machine Learning includes **many different approaches**, not just neural networks.
+
+### Examples of Machine Learning techniques:
+
+1. **Decision Trees** - Makes decisions by asking a series of yes/no questions
+2. **Random Forests** - Combines multiple decision trees
+3. **Support Vector Machines** - Finds the best boundary to separate different categories
+4. **K-Nearest Neighbors** - Classifies based on similarity to nearby examples
+5. **Neural Networks** - Mimics how the human brain processes information
+
+**All of these are Machine Learning**, but only the last one (neural networks) falls under Deep Learning.
+
+---
+
+## What is Deep Learning?
+
+**Deep Learning** is a **specialized subset** of Machine Learning that:
+
+- **Only uses neural networks**
+- Uses **multiple layers** of neurons (hence "deep")
+- Requires **large amounts of data** and computing power
+- Excels at finding complex patterns in unstructured data
+
+### Examples of Deep Learning:
+
+1. **Image Recognition** - Using Convolutional Neural Networks (CNNs)
+2. **Speech Recognition** - Using Recurrent Neural Networks (RNNs)
+3. **Language Translation** - Using Transformer models
+4. **Handwritten Digit Classification** - Using feedforward neural networks
+
+**All Deep Learning is Machine Learning, but not all Machine Learning is Deep Learning.**
+
+---
+
+## The Core Difference: Neural Networks
+
+The fundamental distinction is simple:
+
+| Machine Learning                               | Deep Learning                    |
+| ---------------------------------------------- | -------------------------------- |
+| Includes neural networks **and** other methods | **Only** neural networks         |
+| Broader field                                  | Narrower, more specialized field |
+| Can work with smaller datasets                 | Usually needs large datasets     |
+| Simpler models are often interpretable         | Models are often "black boxes"   |
+
+### The Rule:
+
+- **If it uses a neural network** → It's Deep Learning (and also Machine Learning)
+- **If it doesn't use a neural network** → It's Machine Learning, but NOT Deep Learning
+
+---
+
+## Example 1: Machine Learning, but NOT Deep Learning
+
+### Predicting Heart Disease Using a Decision Tree
+
+Imagine a doctor wants to predict if a patient has heart disease based on:
+
+- Age
+- Gender
+- Cholesterol level
+- Blood pressure
+- Smoking history
+
+A **decision tree** can be trained to make this prediction by asking questions like:
+
+```
+Is cholesterol > 240?
+├── Yes → Is age > 50?
+│   ├── Yes → High risk
+│   └── No → Medium risk
+└── No → Is blood pressure > 140?
+    ├── Yes → Medium risk
+    └── No → Low risk
+```
+
+**This is Machine Learning** because:
+
+- <Check className="inline size-4 text-green-600" /> It learns patterns from
+  patient data
+- <Check className="inline size-4 text-green-600" /> It makes predictions
+- <Check className="inline size-4 text-green-600" /> It improves with more data
+
+**This is NOT Deep Learning** because:
+
+- <X className="inline size-4 text-red-600" /> It doesn't use a neural network
+- <X className="inline size-4 text-red-600" /> It uses a decision tree instead
+
+---
+
+## Example 2: Deep Learning (which is also Machine Learning)
+
+### Recognizing Handwritten Digits Using a Neural Network
+
+Imagine you want to build a system that can read handwritten digits (0-9) from images.
+
+You use a **neural network** with:
+
+- An input layer (receives pixel values from the image)
+- Multiple hidden layers (processes the patterns)
+- An output layer (predicts which digit it is)
+
+**This is Deep Learning** because:
+
+- <Check className="inline size-4 text-green-600" /> It uses a neural network
+- <Check className="inline size-4 text-green-600" /> It has multiple layers
+- <Check className="inline size-4 text-green-600" /> It learns complex patterns
+  from image data
+
+**This is also Machine Learning** because:
+
+- <Check className="inline size-4 text-green-600" /> Deep Learning is a subset
+  of Machine Learning
+- <Check className="inline size-4 text-green-600" /> Everything that is Deep
+  Learning is automatically Machine Learning
+
+---
+
+## Why Does This Matter?
+
+Understanding this distinction helps you:
+
+1. **Choose the right tool** for your problem
+   - Simple problems might not need Deep Learning
+   - Complex problems (like image recognition) often benefit from Deep Learning
+
+2. **Understand limitations**
+   - Deep Learning needs lots of data
+   - Traditional ML methods can work well with smaller datasets
+
+3. **Communicate clearly**
+   - When someone says "Machine Learning," they might mean neural networks or other methods
+   - When someone says "Deep Learning," they specifically mean neural networks
+
+---
+
+## Real-World Analogy
+
+Think of **transportation**:
+
+- **Machine Learning** = All forms of transportation (cars, bikes, trains, planes)
+- **Deep Learning** = Only airplanes
+
+Just like:
+
+- All airplanes are transportation, but not all transportation is airplanes
+- All Deep Learning is Machine Learning, but not all Machine Learning is Deep Learning
+
+---
+
+## Quick Decision Guide
+
+**When you see a model, ask yourself:**
+
+1. **Does it use a neural network?**
+   - **Yes** → It's Deep Learning (and also Machine Learning)
+   - **No** → It's Machine Learning, but NOT Deep Learning
+
+2. **What technique is it using?**
+   - Decision Tree → ML, not DL
+   - Random Forest → ML, not DL
+   - Support Vector Machine → ML, not DL
+   - Convolutional Neural Network (CNN) → DL (and ML)
+   - Recurrent Neural Network (RNN) → DL (and ML)
+   - Transformer → DL (and ML)
+
+---
+
+## Summary
+
+| Concept              | Definition                                        | Examples                                              |
+| -------------------- | ------------------------------------------------- | ----------------------------------------------------- |
+| **Machine Learning** | Learning from data using **any technique**        | Decision trees, neural networks, random forests, SVMs |
+| **Deep Learning**    | Learning from data using **only neural networks** | CNNs, RNNs, Transformers, feedforward networks        |
+
+**Remember:**
+
+- Machine Learning is the **bigger umbrella**
+- Deep Learning is **inside** Machine Learning
+- The key difference is: **Deep Learning = Neural Networks Only**
+
+---
+
+> **Simple Rule:**  
+> If it has layers of neurons → Deep Learning  
+> If it learns from data but doesn't use neural networks → Machine Learning (but not Deep Learning)

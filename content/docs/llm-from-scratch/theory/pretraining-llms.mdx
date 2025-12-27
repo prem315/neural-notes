@@ -1,0 +1,285 @@
+---
+title: Pretraining LLMs
+description: The first and most foundational step in building a Large Language Model.
+---
+
+Pre-training is the **very first and most foundational stage** in building a Large Language Model (LLM).  
+This stage is crucial because it gives the model its **basic understanding of language**, similar to how humans first learn a language before specializing in anything.
+
+Without pre-training, an LLM would not be able to read, write, or understand text in a meaningful way.
+
+---
+
+## What Is Pre-training?
+
+**Pre-training** means training a language model on a **very large and diverse amount of text data**.
+
+- It is the **starting point** of the training process
+- It happens **before fine-tuning**
+- The model produced after this stage is often called:
+  - a **base model**
+  - or a **foundational model**
+
+The goal of pre-training is simple:
+
+> Teach the model how language works.
+
+After pre-training, the model understands:
+
+- Grammar and sentence structure
+- Meaning of words and phrases
+- Relationships between words
+- How ideas flow in text
+- Context and semantics
+
+---
+
+## Why Pre-training Is Needed
+
+Pre-training helps the model:
+
+- **Understand** what users are typing or saying
+- **Generate** meaningful and human-like responses
+- **Work across many tasks** instead of just one specific task
+
+Think of pre-training like **general education**:
+
+- You first learn language, reading, and writing in school
+- Later, you specialize in specific subjects like medicine, engineering, or law
+
+**Fine-tuning is specialization.**  
+**Pre-training is basic education.**
+
+Without this foundational knowledge, the model would be like a person who never learned to read or write trying to become a doctor—it simply wouldn't work.
+
+---
+
+## The Data Used in Pre-training
+
+Pre-training requires a **huge amount of text data**, called a **corpus**.
+
+This data comes from many different sources so the model learns:
+
+- Formal language (academic papers, news)
+- Casual language (social media, blogs)
+- Technical language (documentation, code)
+- Creative writing (books, stories)
+
+### Common Data Sources
+
+Typical pre-training data includes:
+
+- **Internet text** (websites, articles, forums)
+- **Books** (fiction and non-fiction)
+- **News articles** (journalism, reports)
+- **Blogs and forums** (Reddit, Stack Overflow)
+- **Research papers** (scientific literature)
+- **Documentation and code** (GitHub, technical docs)
+
+The size of this data is **massive** — often **billions or trillions of words**.
+
+### Why So Much Data?
+
+The more diverse and extensive the data, the better the model can:
+
+- Understand different writing styles
+- Learn about various topics
+- Handle different contexts
+- Generalize to new situations
+
+---
+
+## Example: GPT-3 Training Data
+
+To understand the scale of pre-training, let's look at GPT-3:
+
+- **Model size:** 175 billion parameters
+- **Training data:** ~300 billion tokens (roughly 300 billion words)
+
+### Breakdown of GPT-3's Data Sources:
+
+1. **Common Crawl (60%)**
+   - Large open dataset scraped from the internet
+   - ~410 billion words (after filtering for quality)
+   - Contains diverse web content
+
+2. **Books (Books1 and Books2)**
+   - ~67 billion words
+   - Includes fiction and non-fiction
+   - Helps model learn narrative structure and long-form writing
+
+3. **WebText2**
+   - ~20 billion words
+   - Includes Reddit posts, blogs, Stack Overflow, and code
+   - High-quality content curated from web sources
+
+4. **Wikipedia**
+   - ~3 billion words
+   - Encyclopedic knowledge
+   - Factual and well-structured information
+
+This diversity helps the model understand many writing styles, topics, and contexts.
+
+---
+
+## Unlabeled and Unsupervised Learning
+
+The data used in pre-training is usually:
+
+- **Unlabeled** (no human annotations)
+- Also called **raw text**
+
+This means:
+
+- No human tells the model what is correct or incorrect
+- No tags like "this is a question" or "this is a translation"
+- No explicit instructions about what to learn
+
+Because of this, pre-training is considered:
+
+> **Unsupervised learning** or **Self-supervised learning**
+
+The model learns patterns directly from the text itself, without explicit supervision.
+
+### How Does It Learn Without Labels?
+
+The model creates its own "labels" from the data structure. For example:
+
+- Given: "The cat sat on the \_\_\_"
+- The model learns to predict: "mat" (or other plausible words)
+
+The text itself provides the supervision signal.
+
+---
+
+## What Task Does the Model Learn During Pre-training?
+
+During pre-training, the model is usually trained on a **simple but powerful task**:
+
+### Next-Word Prediction (Auto-regressive Language Modeling)
+
+The model learns to predict the **next word** in a sentence based on all the previous words.
+
+#### Example 1: Simple Prediction
+
+**Input text:** "The cat sat on the"  
+**Model predicts:** "mat" (or "floor", "chair", etc.)
+
+The model sees:
+
+- "The" → predicts "cat"
+- "The cat" → predicts "sat"
+- "The cat sat" → predicts "on"
+- "The cat sat on" → predicts "the"
+- "The cat sat on the" → predicts "mat"
+
+#### Example 2: More Complex Prediction
+
+**Input text:** "Machine learning is a subset of"  
+**Model predicts:** "artificial" (then "intelligence")
+
+The model has learned from seeing similar patterns in its training data that:
+
+- "subset of" is often followed by a category name
+- "Machine learning" is related to "artificial intelligence"
+
+#### Example 3: Context-Aware Prediction
+
+**Input text:** "I went to the bank to deposit"  
+**Model predicts:** "money"
+
+**Input text:** "I went to the river bank to"  
+**Model predicts:** "fish" (or "sit", "relax")
+
+Notice how the model learns that "bank" has different meanings based on context!
+
+### Why Next-Word Prediction Works So Well
+
+This simple task forces the model to learn:
+
+- **Grammar:** To predict correctly, it must understand sentence structure
+- **Semantics:** It must know what words mean
+- **Context:** It must consider all previous words
+- **World knowledge:** It learns facts from the training data
+- **Reasoning:** It must infer what makes sense next
+
+By doing this billions of times across trillions of words, the model develops a deep understanding of language.
+
+---
+
+## Alternative Pre-training Tasks
+
+While next-word prediction (causal language modeling) is most common, there are other approaches:
+
+### Masked Language Modeling (MLM)
+
+Used by models like **BERT**.
+
+**How it works:**
+
+- Some words in a sentence are randomly hidden (masked)
+- The model must predict the missing words
+
+**Example:**  
+**Original:** "The cat sat on the mat"  
+**Masked:** "The cat [MASK] on the mat"  
+**Model predicts:** "sat"
+
+This allows the model to use context from **both before and after** the masked word.
+
+### Comparison
+
+| Approach                  | Direction          | Example Models      |
+| ------------------------- | ------------------ | ------------------- |
+| **Causal LM** (Next-word) | Left-to-right only | GPT-2, GPT-3, GPT-4 |
+| **Masked LM**             | Bidirectional      | BERT, RoBERTa       |
+
+---
+
+## The Output of Pre-training: A Base Model
+
+After pre-training is complete, you have a **base model** (or **foundation model**).
+
+### What Can a Base Model Do?
+
+A base model can:
+
+- Complete sentences
+- Generate text
+- Understand language patterns
+- Answer questions (to some extent)
+
+### What Can't It Do Well?
+
+A base model:
+
+- May not follow instructions precisely
+- Might generate inappropriate content
+- Doesn't know how to perform specific tasks well
+- Lacks alignment with human preferences
+
+**This is why fine-tuning is needed!**
+
+---
+
+## Key Takeaways
+
+1. **Pre-training is the foundation** — it's the first and most important step
+2. **Massive data is required** — billions or trillions of words from diverse sources
+3. **Unsupervised learning** — the model learns from raw text without labels
+4. **Next-word prediction** — a simple task that teaches deep language understanding
+5. **Creates a base model** — which can then be fine-tuned for specific tasks
+
+Pre-training is like teaching a child to read and write before they specialize in any subject. It's the essential foundation that makes everything else possible.
+
+---
+
+## What Comes Next?
+
+After pre-training, the model goes through:
+
+1. **Fine-tuning** — teaching it to perform specific tasks
+2. **Alignment** — making it helpful, harmless, and honest
+3. **Deployment** — making it available for users
+
+But none of this would be possible without the crucial first step: **pre-training**.

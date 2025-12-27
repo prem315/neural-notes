@@ -1,0 +1,12 @@
+{
+  "title": "Theory",
+  "pages": [
+    "llm-basics",
+    "ai-ml-dl-hierarchy",
+    "ml-vs-dl",
+    "pretraining-llms",
+    "finetuning-llms",
+    "transformers",
+    "gpt3-architecture"
+  ]
+}

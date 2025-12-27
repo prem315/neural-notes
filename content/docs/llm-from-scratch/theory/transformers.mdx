@@ -1,0 +1,444 @@
+---
+title: Transformers
+description: The revolutionary architecture that powers modern LLMs.
+---
+
+The Transformer architecture is the **"secret sauce"** behind Large Language Models (LLMs) and their remarkable capabilities. It has enabled significant breakthroughs in artificial intelligence and is the foundation for models like GPT, BERT, and many others.
+
+While the full architecture is highly complex, we can understand a simplified version through an **eight-step process**. The original Transformer was designed to translate text from one language to another (like English to German), which makes it a perfect example to understand how it works.
+
+---
+
+## The Two Main Building Blocks
+
+The Transformer architecture consists of two main components:
+
+### 1. **The Encoder Block**
+
+- **Purpose:** Understand and capture the meaning of the input text
+- **Output:** Vector embeddings that represent the semantic meaning
+
+### 2. **The Decoder Block**
+
+- **Purpose:** Generate the output text based on the encoder's understanding
+- **Output:** The final translated or generated text
+
+Think of it like a conversation between two people:
+
+- The **encoder** is like someone who reads and understands a document
+- The **decoder** is like someone who explains that document in a different language
+
+---
+
+## How the Transformer Works: 8 Steps
+
+Let's walk through the process using **English-to-German translation** as our example.
+
+We'll translate: **"The cat sits on the mat"** → **"Die Katze sitzt auf der Matte"**
+
+---
+
+## Steps 1–4: The Encoder (Capturing Meaning)
+
+The encoder's primary goal is to take the input sentences and convert them into **vector embeddings** that capture the semantic meaning and relationships between words.
+
+### **Step 1: Input Text**
+
+The process starts with the input text that needs to be translated.
+
+**Example:**
+
+```
+Input: "The cat sits on the mat"
+```
+
+This is the raw English sentence we want to translate to German.
+
+---
+
+### **Step 2: Pre-processing / Tokenization**
+
+The input text is broken down into smaller pieces called **tokens**, and each token is assigned a unique ID (a number).
+
+**What is tokenization?**
+
+- Breaking sentences into smaller units (words, subwords, or characters)
+- Assigning each unit a unique numerical ID
+- Creating a vocabulary that the model can work with
+
+**Example:**
+
+| Token | Token ID |
+| ----- | -------- |
+| The   | 1001     |
+| cat   | 2543     |
+| sits  | 3892     |
+| on    | 1205     |
+| the   | 1001     |
+| mat   | 4721     |
+
+**Note:** For simplicity, we're treating each word as one token, though in reality, some words might be split into multiple tokens (like "running" → "run" + "ning").
+
+---
+
+### **Step 3: Encoder Processing**
+
+The token IDs are passed to the **encoder**, one of the most important building blocks of the Transformer.
+
+The encoder's job is to implement **vector embedding** — converting these numerical IDs into rich, meaningful representations.
+
+---
+
+### **Step 4: Vector Embedding Generation**
+
+This is where the magic happens! The encoder converts the tokens into **vectorized representations** (vectors).
+
+**What are vector embeddings?**
+
+Vector embeddings are numerical representations of words in a high-dimensional space. Instead of just being a simple number, each word becomes a list of hundreds or thousands of numbers.
+
+**Example (simplified to 3 dimensions for visualization):**
+
+```
+"cat"    → [0.2, 0.8, 0.1]
+"dog"    → [0.3, 0.7, 0.15]
+"banana" → [0.9, 0.1, 0.05]
+"king"   → [0.1, 0.2, 0.9]
+```
+
+**Why is this important?**
+
+The arrangement of these vectors captures **semantic meaning**:
+
+- Words with similar meanings are placed **closer together** in this space
+- Unrelated words are placed **farther apart**
+
+**Real-world example:**
+
+- `"apple"`, `"banana"`, `"orange"` would be close together (all fruits)
+- `"banana"` and `"king"` would be far apart (completely different concepts)
+
+**In reality:**
+
+- These vectors exist in **very high-dimensional space** (not just 3D)
+- Modern models use 512, 1024, or even 12,000+ dimensions
+- This allows capturing incredibly nuanced relationships between words
+
+**Output of the Encoder:**
+
+The encoder produces a set of vector embeddings that represent the entire input sentence with all its semantic meaning and context. These embeddings are then passed to the decoder.
+
+---
+
+## Steps 5–8: The Decoder (Generating Output)
+
+The decoder's main purpose is to **generate the output text** (the translation) using the embedding vectors from the encoder and the partial output it has already generated.
+
+### **Step 5: Partial Output Text**
+
+The decoder works **one word at a time**, generating the translation incrementally.
+
+**Example progression:**
+
+```
+Start:        <start>
+After step 1: "Die"
+After step 2: "Die Katze"
+After step 3: "Die Katze sitzt"
+After step 4: "Die Katze sitzt auf"
+After step 5: "Die Katze sitzt auf der"
+After step 6: "Die Katze sitzt auf der Matte"
+```
+
+At each step, the decoder has access to what it has already translated (the **partial output**).
+
+---
+
+### **Step 6: Decoder Input**
+
+The decoder receives **two inputs** at each step:
+
+1. **Vector embeddings from the encoder** (from Step 4)
+   - These contain the meaning of the entire input sentence
+2. **Partial output text** (the words already translated)
+   - This is also tokenized and converted to embeddings
+   - Helps maintain consistency and context in the translation
+
+**Example at the third word:**
+
+```
+Encoder embeddings: [vectors representing "The cat sits on the mat"]
+Partial output: "Die Katze" (already translated)
+Task: Predict the next word
+```
+
+---
+
+### **Step 7: Prediction**
+
+The decoder uses **both inputs** to predict the next word in the translation.
+
+**How it works:**
+
+1. The decoder processes the encoder embeddings and partial output
+2. It uses the **attention mechanism** (explained later) to focus on relevant parts
+3. It generates a probability distribution over all possible next words
+4. It selects the most likely word
+
+**Example:**
+
+```
+Input from encoder: "The cat sits on the mat"
+Partial translation: "Die Katze"
+Prediction probabilities:
+  - "sitzt" (sits): 85%
+  - "läuft" (runs): 10%
+  - "schläft" (sleeps): 3%
+  - other words: 2%
+
+Selected word: "sitzt" ✓
+```
+
+**Training process:**
+
+- The model is trained like a neural network
+- Uses a **loss function** to measure prediction errors
+- Optimizes parameters through backpropagation
+- Continues training until it predicts words correctly
+
+---
+
+### **Step 8: Final Output**
+
+The decoder continues the prediction process, generating the translated sentence **one word at a time**, until it produces a special `<end>` token indicating completion.
+
+**Complete process:**
+
+```
+Step 1: <start> → "Die"
+Step 2: "Die" → "Katze"
+Step 3: "Die Katze" → "sitzt"
+Step 4: "Die Katze sitzt" → "auf"
+Step 5: "Die Katze sitzt auf" → "der"
+Step 6: "Die Katze sitzt auf der" → "Matte"
+Step 7: "Die Katze sitzt auf der Matte" → <end>
+
+Final output: "Die Katze sitzt auf der Matte"
+```
+
+---
+
+## The Complete Process: Summary Table
+
+| Step  | Component      | Input                 | Process                             | Output                               |
+| ----- | -------------- | --------------------- | ----------------------------------- | ------------------------------------ |
+| **1** | Input          | Raw text              | Receive English sentence            | "The cat sits on the mat"            |
+| **2** | Tokenizer      | Text                  | Break into tokens, assign IDs       | [1001, 2543, 3892, 1205, 1001, 4721] |
+| **3** | Encoder        | Token IDs             | Process through encoder layers      | Intermediate representations         |
+| **4** | Embeddings     | Encoder output        | Convert to high-dimensional vectors | Vector embeddings                    |
+| **5** | Partial Output | Previous translations | Track what's been generated         | "Die Katze sitzt..."                 |
+| **6** | Decoder Input  | Embeddings + Partial  | Combine both inputs                 | Ready for prediction                 |
+| **7** | Prediction     | Decoder processing    | Calculate next word probabilities   | Next word: "sitzt"                   |
+| **8** | Final Output   | All predictions       | Combine all words                   | "Die Katze sitzt auf der Matte"      |
+
+---
+
+## The Secret Ingredient: Attention Mechanism
+
+While the eight steps above explain the basic flow, the **core principle** that makes the Transformer truly powerful is the **Self-Attention mechanism**.
+
+This is why the groundbreaking paper is titled: **"Attention is All You Need"**
+
+### What is Attention?
+
+**Attention** allows the model to focus on different parts of the input when processing each word, just like how humans pay attention to relevant information when understanding or translating text.
+
+### Two Key Capabilities of Self-Attention
+
+#### 1. **Weigh Importance**
+
+The attention mechanism allows the model to determine which words are most important or relevant to each other.
+
+**Example:**
+
+```
+Sentence: "The cat, which was very fluffy, sat on the mat"
+
+When processing "sat":
+- High attention to: "cat" (subject performing the action)
+- High attention to: "mat" (object related to the action)
+- Lower attention to: "which", "was", "very", "fluffy" (descriptive but less critical)
+```
+
+The model learns to assign different **attention weights** to different words based on their relevance.
+
+#### 2. **Capture Long-Range Dependencies**
+
+Attention allows the model to look far back in the text to identify which previous words should receive more focus when predicting the next word.
+
+**Example:**
+
+```
+Text: "The chef prepared a delicious meal. The customers loved it. They gave her a standing ovation."
+
+When processing "her":
+- The model needs to look back to "chef" (several sentences back)
+- It needs to understand "chef" is the person being referred to
+- It maintains this context over a long sequence
+```
+
+**Why is this important?**
+
+Traditional models (like RNNs) struggle with long-range dependencies because they process text sequentially and can "forget" earlier information. The Transformer's attention mechanism solves this by allowing the model to directly access any previous word, no matter how far back it is.
+
+---
+
+## How Attention Works: A Simple Example
+
+Let's see attention in action with a simple sentence:
+
+**Input:** "The cat sat on the mat"
+
+When the model is processing the word **"sat"**, the attention mechanism helps it understand:
+
+| Word | Attention Weight | Why?                                            |
+| ---- | ---------------- | ----------------------------------------------- |
+| The  | 0.05             | Low importance - just an article                |
+| cat  | **0.70**         | High importance - the subject doing the sitting |
+| sat  | 0.10             | The current word being processed                |
+| on   | 0.05             | Preposition, moderate importance                |
+| the  | 0.02             | Another article, low importance                 |
+| mat  | 0.08             | The object, but less critical for "sat"         |
+
+The model learns these weights automatically during training!
+
+---
+
+## Attention Visualization
+
+Here's how attention might look when translating "The cat sits on the mat" to German:
+
+```
+English:  The    cat    sits   on     the    mat
+           ↓      ↓      ↓      ↓      ↓      ↓
+German:   Die  Katze  sitzt  auf    der   Matte
+
+When generating "sitzt":
+- Strong attention to "sits" (direct translation)
+- Moderate attention to "cat" (subject agreement)
+- Weak attention to other words
+```
+
+The attention mechanism creates these connections automatically, learning which words in the source language correspond to which words in the target language.
+
+---
+
+## Transformer vs. Other Architectures
+
+The Transformer is fundamentally different from earlier neural network architectures:
+
+| Feature                     | RNN/LSTM                        | Transformer                  |
+| --------------------------- | ------------------------------- | ---------------------------- |
+| **Processing**              | Sequential (one word at a time) | Parallel (all words at once) |
+| **Long-range dependencies** | Difficult (information fades)   | Easy (direct attention)      |
+| **Training speed**          | Slower (sequential bottleneck)  | Faster (parallelizable)      |
+| **Context window**          | Limited                         | Very large                   |
+| **Core mechanism**          | Recurrence                      | Attention                    |
+
+### Why Transformers Win
+
+**1. Parallelization:**
+
+- RNNs must process word 1, then word 2, then word 3...
+- Transformers can process all words simultaneously
+- This makes training much faster on modern GPUs
+
+**2. Better long-range understanding:**
+
+- RNNs struggle to remember information from 100 words ago
+- Transformers can directly attend to any previous word
+- This enables better understanding of context
+
+**3. Scalability:**
+
+- Transformers scale better with more data and compute
+- This is why models like GPT-4 with billions of parameters are possible
+
+---
+
+## Real-World Applications
+
+The Transformer architecture powers virtually all modern LLMs:
+
+### **Language Models**
+
+- **GPT series** (GPT-2, GPT-3, GPT-4) - Text generation
+- **BERT** - Understanding and classification
+- **T5** - Text-to-text tasks
+
+### **Translation**
+
+- Google Translate (uses Transformers)
+- DeepL
+- Microsoft Translator
+
+### **Other Applications**
+
+- **Code generation** (GitHub Copilot, CodeX)
+- **Question answering** (ChatGPT, Claude)
+- **Summarization** (news summaries, document analysis)
+- **Image generation** (DALL-E, Stable Diffusion - uses Transformer variants)
+
+---
+
+## Key Takeaways
+
+1. **Two main blocks:** Encoder (understands input) and Decoder (generates output)
+
+2. **Eight-step process:** From raw text input to final translated output
+
+3. **Vector embeddings:** Words are represented as high-dimensional vectors that capture semantic meaning
+
+4. **Attention is crucial:** The self-attention mechanism allows the model to weigh importance and capture long-range dependencies
+
+5. **Parallel processing:** Unlike RNNs, Transformers can process all words simultaneously, making them faster and more scalable
+
+6. **Foundation of modern AI:** Nearly all state-of-the-art language models use the Transformer architecture
+
+---
+
+## Simplified Mental Model
+
+Think of the Transformer as:
+
+**Encoder = A Reader**
+
+- Reads and understands the input text
+- Creates a rich, meaningful representation
+- Captures relationships between all words
+
+**Decoder = A Writer**
+
+- Takes the understanding from the encoder
+- Generates output one word at a time
+- Uses attention to focus on relevant parts
+
+**Attention = A Spotlight**
+
+- Highlights which words are important
+- Connects related words across long distances
+- Learns these connections automatically
+
+---
+
+## What's Next?
+
+Now that you understand the Transformer architecture, you can explore:
+
+- **GPT Architecture** - How GPT models use only the decoder part
+- **BERT Architecture** - How BERT uses only the encoder part
+- **Attention mechanisms in detail** - Multi-head attention, self-attention, cross-attention
+- **Training Transformers** - How these models are actually trained
+- **Optimization techniques** - Making Transformers faster and more efficient
+
+The Transformer architecture revolutionized AI and continues to be the foundation for the most advanced language models today!
